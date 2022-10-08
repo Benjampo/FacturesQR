@@ -14,7 +14,7 @@ class BillFactory extends Factory
     public function definition()
     {
         return [
-            'title' => fake()->title(),
+            'title' => fake()->text(20),
             'description' => fake()->text(),
             'price' => fake()->numberBetween(1, 1000),
         ];

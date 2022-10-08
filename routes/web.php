@@ -29,11 +29,10 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::resource('bills', BillController::class);
+Route::resource('bills', BillController::class)->middleware(['auth', 'verified']);
 
 
-Route::get('/new', function () {
-    return Inertia::render('NewBill');
-})->middleware(['auth', 'verified'])->name('new');
+
+
 
 require __DIR__.'/auth.php';

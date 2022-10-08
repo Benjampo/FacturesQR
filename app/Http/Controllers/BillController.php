@@ -10,7 +10,7 @@ use Inertia\Inertia;
 class BillController extends Controller
 {
     public function index() {
-        $bills = Bill::latest()->paginate(10);
+        $bills = Bill::latest()->paginate(20);
         return Inertia::render('Bill/Index', [
             'bills' => $bills,
         ]);
@@ -22,10 +22,10 @@ class BillController extends Controller
     public function store(Request $request)
     {
         Bill::create(
-            Request::validate([
-                'title' => ['required', 'max:90'],
-                'description' => ['required'],
-                'price' => ['required'],
+            $request->validate([
+                'title' => ['required', 'max:64'],
+                'description' => ['required', 'max:255'],
+                'price' => ['required', 'numeric'],
             ])
         );
 
