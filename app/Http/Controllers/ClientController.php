@@ -24,9 +24,13 @@ class ClientController extends Controller
     {
         Client::create(
             $request->validate([
-                'title' => ['required', 'max:64'],
-                'description' => ['required', 'max:255'],
-                'price' => ['required', 'numeric'],
+                'firstname' => ['required', 'max:200'],
+                'lastname' => ['required', 'max:200'],
+                'address' => ['required', 'max:200'],
+                'zipcode' => ['required', 'numeric'],
+                'city' => ['required', 'max:200'],
+                'phone' => ['nullable'],
+                'email' => ['nullable'],
             ])
         );
 
@@ -41,9 +45,13 @@ class ClientController extends Controller
     public function update(Request $request, Client $client)
     {
         $data = Request::validate([
-            'title' => ['required', 'max:90'],
-            'description' => ['required'],
-            'bill' => ['required'],
+            'firstname' => ['required', 'max:200'],
+            'lastname' => ['required', 'max:200'],
+            'address' => ['required', 'max:200'],
+            'zipcode' => ['required', 'numeric'],
+            'city' => ['required', 'max:200'],
+            'phone' => ['nullable'],
+            'email' => ['nullable'],
         ]);
         $client->update($data);
 
