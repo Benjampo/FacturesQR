@@ -17,6 +17,8 @@ class BillFactory extends Factory
             'title' => fake()->text(20),
             'description' => fake()->text(),
             'price' => fake()->numberBetween(1, 1000),
+            'user_id' => fake()->numberBetween(1, 3),
+            'client_id' => fake()->numberBetween(1, 25),
         ];
     }
 }

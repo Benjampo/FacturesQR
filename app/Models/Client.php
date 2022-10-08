@@ -23,4 +23,8 @@ class Client extends Model
     {
         return $this->belongsTo(User::class); // Omit the second parameter if you're following convention
     }
+    public function bill()
+    {
+        return $this->hasMany(Bill::class); // Omit the second parameter if you're following convention
+    }
 }

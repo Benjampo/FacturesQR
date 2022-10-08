@@ -3,14 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bill;
+use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class BillController extends Controller
 {
     public function index() {
-        $bills = Bill::all();
+        $bills = Bill::all()->where('user_id', Auth::user()->id);
+        $bills->map(function ($bill) {
+            return $bill->client;
+        });
         return Inertia::render('Bill/Index', [
             'bills' => $bills,
         ]);
