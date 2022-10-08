@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,9 +31,6 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('bills', BillController::class)->middleware(['auth', 'verified']);
-
-
-
-
+Route::resource('clients', ClientController::class)->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';
