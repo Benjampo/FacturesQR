@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Bill;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Bill;
+use App\Models\Client;
 
-class BillSeeder extends Seeder
+class ClientSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +16,6 @@ class BillSeeder extends Seeder
      */
     public function run()
     {
-        Bill::factory(30)->create();
+        Client::factory(20)->create();
     }
 }

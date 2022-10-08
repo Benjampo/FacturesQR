@@ -24,7 +24,11 @@ return new class extends Migration
 
             $table->string('phone');
             $table->string('email');
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
+        });
+        Schema::table('clients', function($table) {
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -36,5 +40,6 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('clients');
+
     }
 };

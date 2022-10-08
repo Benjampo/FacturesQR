@@ -55,7 +55,7 @@ export default {
 
                             </thead>
                             <tbody>
-                            <tr class='max-w-full' v-for="bill in bills.data">
+                            <tr class='max-w-full' v-for="bill in bills">
                                 <td class=" border-b border-gray-200 whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">
                                     client
                                 </td>

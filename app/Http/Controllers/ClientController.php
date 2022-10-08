@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -11,9 +12,9 @@ use Inertia\Inertia;
 class ClientController extends Controller
 {
     public function index() {
-        $clients = Client::latest()->paginate(20);
+
         return Inertia::render('Client/Index', [
-            'clients' => $clients,
+            'clients' => Client::all()->where('user_id', Auth::user()->id),
         ]);
     }
     public function create()

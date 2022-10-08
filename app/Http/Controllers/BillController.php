@@ -10,7 +10,7 @@ use Inertia\Inertia;
 class BillController extends Controller
 {
     public function index() {
-        $bills = Bill::latest()->paginate(20);
+        $bills = Bill::all();
         return Inertia::render('Bill/Index', [
             'bills' => $bills,
         ]);
