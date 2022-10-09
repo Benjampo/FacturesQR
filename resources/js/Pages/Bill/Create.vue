@@ -14,12 +14,18 @@
         ComboboxOptions,
     } from '@headlessui/vue'
     import { computed } from 'vue';
+    import TextArea from '@/Components/TextArea.vue';
 
     const form = useForm({
         title: null,
         description: null,
         price: null,
         client_id: null,
+        tasks: [
+            {
+
+            }
+        ]
     });
     const submit = () => {
         form.post(route("bills.store"));
@@ -43,6 +49,16 @@ export default {
             const arr =  Object.keys(newData).map((k) => newData[k])
             this.clientsData = arr
         },
+        addRow() {
+            this.form.tasks.push({
+                title: '',
+                description: '',
+                price: 0,
+            })
+        },
+        deleteRow() {
+            this.form.tasks.pop()
+        },
     },
     created() {
         this.formatClients()
@@ -55,6 +71,14 @@ export default {
                     console.log(person)
                     return person.firstname.toLowerCase().includes(this.query.toLowerCase())
                 })
+        },
+        totalPrice() {
+            let sum = 0;
+            this.form.tasks.forEach((task) => {
+                sum += parseInt(task.price)
+            })
+            this.form.price = sum
+            return  sum > 0 ?  sum : null
         }
     },
 
@@ -79,6 +103,12 @@ export default {
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
                         <form @submit.prevent="submit">
+                            <div class="mt-4">
+                                <InputLabel label='Client' for="client">Client</InputLabel>
+                                <select v-model="form.client_id">
+                                    <option v-for='client in clients' :value='client.id'>{{ client.firstname }} {{ client.lastname }}</option>
+                                </select>
+                            </div>
                             <div>
                                 <InputLabel Label='Titre' for="title">Titre</InputLabel>
                                 <TextInput
@@ -100,8 +130,8 @@ export default {
                             </div>
                             <div class="mt-4">
                                 <InputLabel label='Description' for="description">Description</InputLabel>
-                                <TextInput
-                                    id="description"
+                                <TextArea
+                                    id="descriptionf"
                                     type="text"
                                     v-model="form.description"
                                     class="
@@ -116,21 +146,23 @@ export default {
                                         focus:ring-blue-600
                                     "
                                 >
-                                </TextInput>
+                                </TextArea>
                             </div>
+
                             <div class="mt-4">
-                                <InputLabel label='Client' for="client">Client</InputLabel>
-                                <select v-model="form.client_id">
-                                    <option v-for='client in clients' :value='client.id'>{{ client.firstname }} {{ client.lastname }}</option>
-                                </select>
-                            </div>
-                            <div class="mt-4">
-                                <InputLabel label='Prix' for="price">Prix</InputLabel>
-                                <TextInput
-                                    id="price"
-                                    type="number"
-                                    v-model="form.price"
-                                    class="
+                                <div class='flex justify-between items-center '>
+                                    <InputLabel label='tasks' for="task">Unités</InputLabel>
+                                    <button class='text-indigo-600 hover:text-indigo-900' @click.prevent='addRow'>Ajouter une entrée</button>
+                                </div>
+                                <ul >
+
+                                    <li class='' v-for='task in form.tasks'>
+                                        <InputLabel label='tasks' for="task">Tâches</InputLabel>
+                                        <div class='flex'>
+                                            <TextInput
+                                                type="text"
+                                                v-model="task.title"
+                                                class="
                                         w-full
                                         px-4
                                         py-2
@@ -141,10 +173,37 @@ export default {
                                         focus:ring-1
                                         focus:ring-blue-600
                                     "
-                                >
-                                </TextInput>
-                            </div>
+                                            />
+                                            <TextInput
+                                                type="number"
+                                                v-model="task.price"
+                                                class="
+                                        w-full
+                                        px-4
+                                        py-2
+                                        mt-2
+                                        border
+                                        rounded-md
+                                        focus:outline-none
+                                        focus:ring-1
+                                        focus:ring-blue-600
+                                    "
+                                            />
+                                        </div>
+                                        <TextArea
+                                            class='w-full'
+                                            type="text"
+                                            v-model="task.description"
+                                        />
+                                        <button @click.prevent='deleteRow'>delete line</button>
+                                    </li>
+                                </ul>
+                                <div class='flex font-bold text-2xl'>
+                                    <h2 class='ml-auto'>Total: </h2>
+                                    <h2 class='ml-2'>{{totalPrice}} CHF</h2>
+                                </div>
 
+                            </div>
                             <!-- submit -->
                             <div class="flex items-center mt-4">
                                 <PrimaryButton type="submit" class="ml-4">

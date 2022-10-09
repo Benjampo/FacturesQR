@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Service extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'title',
+        'description',
+        'price',
+    ];
+    public function bill(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Bill::class); // Omit the second parameter if you're following convention
+    }
 }

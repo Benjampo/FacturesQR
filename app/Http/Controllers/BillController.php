@@ -35,6 +35,7 @@ class BillController extends Controller
                 'price' => ['required', 'numeric'],
                 'client_id' => ['required', 'numeric'],
             ])
+
         );
 
         return Redirect::route('bills.index');
