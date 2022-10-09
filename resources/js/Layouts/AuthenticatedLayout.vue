@@ -2,8 +2,8 @@
 import { ref } from 'vue';
 import NavLink from '@/Components/NavLink.vue';
 import DropdownLink from '@/Components/IconLink.vue';
-import Dropdown from '@/Components/Dropdown.vue';
 import { BanknotesIcon, HomeIcon, UsersIcon, BellIcon, PowerIcon } from '@heroicons/vue/24/outline'
+import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 
 const showingNavigationDropdown = ref(false);
 </script>
@@ -11,10 +11,11 @@ const showingNavigationDropdown = ref(false);
 <template>
     <div>
         <div class="min-h-screen bg-gray-100 flex">
-            <nav class="flex w-16 min-h-0 flex-1 flex-col border-r border-gray-200 bg-white">
+            <nav class="flex max-w-xl  min-h-0 flex-1 flex-col border-r border-gray-200 bg-white">
                 <div class="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
-                    <div class="flex flex-shrink-0 items-center px-4">
-                        <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company" />
+                    <div class="flex flex-shrink-0 items-center px-4 justify-between">
+                        <ApplicationLogo class="h-8 w-auto" />
+                        <BellIcon class="h-6 w-6 text-gray-400 hover:text-gray-900 hover:bg-gray-50 cursor-pointer" />
                     </div>
                     <nav class="mt-5 flex-1 space-y-1 bg-white px-2" aria-label="Sidebar">
                         <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
@@ -52,7 +53,6 @@ const showingNavigationDropdown = ref(false);
                 <header class="bg-white shadow" v-if="$slots.header">
                     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between">
                         <slot name="header" />
-                        <BellIcon class="h-6 w-6 text-gray-400 hover:text-gray-900 hover:bg-gray-50 cursor-pointer" />
                     </div>
                 </header>
                 <!-- Page Content -->
