@@ -4,18 +4,62 @@
     import TextInput from '@/Components/TextInput.vue';
     import InputLabel from '@/Components/InputLabel.vue';
     import PrimaryButton from '@/Components/PrimaryButton.vue';
+    import {
+        Combobox,
+        ComboboxButton,
+        ComboboxInput,
+        ComboboxLabel,
+        ComboboxOption,
 
+        ComboboxOptions,
+    } from '@headlessui/vue'
+    import { computed } from 'vue';
 
     const form = useForm({
         title: null,
         description: null,
         price: null,
+        client_id: null,
     });
     const submit = () => {
         form.post(route("bills.store"));
     }
 </script>
+<script>
+export default {
+    props: {
+        clients: Object,
+    },
+    data() {
+        return {
+            clientsData: null,
+            query: '',
+        }
+    },
+    methods: {
+        formatClients() {
+            console.log(this.clients)
+            const newData = JSON.parse(JSON.stringify(this.clients))
+            const arr =  Object.keys(newData).map((k) => newData[k])
+            this.clientsData = arr
+        },
+    },
+    created() {
+        this.formatClients()
+    },
+    computed: {
+        filtered() {
+            return this.query === ''
+                ? this.clientsData
+                : this.clientsData.filter((person) => {
+                    console.log(person)
+                    return person.firstname.toLowerCase().includes(this.query.toLowerCase())
+                })
+        }
+    },
 
+};
+</script>
 
 <template>
     <Head title="Bills" />
@@ -73,6 +117,12 @@
                                     "
                                 >
                                 </TextInput>
+                            </div>
+                            <div class="mt-4">
+                                <InputLabel label='Client' for="client">Client</InputLabel>
+                                <select v-model="form.client_id">
+                                    <option v-for='client in clients' :value='client.id'>{{ client.firstname }} {{ client.lastname }}</option>
+                                </select>
                             </div>
                             <div class="mt-4">
                                 <InputLabel label='Prix' for="price">Prix</InputLabel>

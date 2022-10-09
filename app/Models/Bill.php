@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Bill extends Model
 {
@@ -13,6 +14,7 @@ class Bill extends Model
         'title',
         'description',
         'price',
+        'client_id',
     ];
 
     public function user()
@@ -22,6 +24,12 @@ class Bill extends Model
     public function client()
     {
         return $this->belongsTo(Client::class); // Omit the second parameter if you're following convention
+    }
+    protected static function booted()
+    {
+        static::creating(function ($product) {
+            $product->user_id = Auth::id();
+        });
     }
 
 }

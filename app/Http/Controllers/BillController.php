@@ -22,7 +22,9 @@ class BillController extends Controller
     }
     public function create()
     {
-        return Inertia::render('Bill/Create');
+        return Inertia::render('Bill/Create', [
+            'clients' => Client::all()->where('user_id', Auth::user()->id),
+        ]);
     }
     public function store(Request $request)
     {
@@ -31,6 +33,7 @@ class BillController extends Controller
                 'title' => ['required', 'max:64'],
                 'description' => ['required', 'max:255'],
                 'price' => ['required', 'numeric'],
+                'client_id' => ['required', 'numeric'],
             ])
         );
 

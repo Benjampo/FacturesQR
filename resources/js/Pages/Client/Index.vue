@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link} from '@inertiajs/inertia-vue3';
-import { TrashIcon,PencilIcon } from '@heroicons/vue/24/outline'
+import { TrashIcon,PencilIcon, PlusIcon } from '@heroicons/vue/24/outline'
 
 </script>
 <script>
@@ -28,6 +28,15 @@ export default {
                 </h2>
 
             </div>
+        </template>
+        <template #action>
+            <button class="flex  items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+                <a :href="route('clients.create')" class='flex justify-center items-center gap-1'>
+                    <PlusIcon class="h-5 w-5" aria-hidden="true" />
+                    Créer un client
+                </a>
+
+            </button>
         </template>
 
         <div class="py-12">
